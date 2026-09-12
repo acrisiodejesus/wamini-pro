@@ -53,7 +53,7 @@ export async function POST(req: NextRequest) {
       mobile_number: user.mobile_number,
     });
 
-    return apiOk({
+    const response = apiOk({
       access_token: token,
       user: {
         id: userId,
@@ -66,6 +66,15 @@ export async function POST(req: NextRequest) {
         subscription_status: user.subscription_status,
       },
     });
+
+    response.cookies.set('wamini_token', token, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+      sameSite: 'lax',
+      secure: process.env.NODE_ENV === 'production',
+    });
+
+    return response;
   } catch (error: any) {
     console.error('[Login] Erro ao autenticar utilizador:', error);
     return apiError('Erro interno ao processar autenticação', 500);

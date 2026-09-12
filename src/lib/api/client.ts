@@ -69,12 +69,14 @@ export function getToken(): string | null {
 export function setToken(token: string): void {
   if (typeof window === 'undefined') return;
   localStorage.setItem('wamini_token', token);
+  document.cookie = `wamini_token=${token}; path=/; max-age=604800; SameSite=Lax`;
 }
 
 export function clearToken(): void {
   if (typeof window === 'undefined') return;
   localStorage.removeItem('wamini_token');
   localStorage.removeItem('wamini_user');
+  document.cookie = 'wamini_token=; path=/; max-age=0; SameSite=Lax';
 }
 
 export function getStoredUser(): any | null {

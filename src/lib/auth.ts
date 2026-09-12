@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getDb } from '@/lib/db';
 import { verifyJwt } from '@/lib/jwt';
 
@@ -74,10 +74,10 @@ export async function getAuthPayload(req?: NextRequest): Promise<AuthUserPayload
 
 /** Resposta de erro JSON padrão */
 export function apiError(message: string, status = 400) {
-  return Response.json({ error: message }, { status });
+  return NextResponse.json({ error: message }, { status });
 }
 
 /** Resposta de sucesso JSON padrão */
 export function apiOk<T>(data: T, status = 200) {
-  return Response.json(data, { status });
+  return NextResponse.json(data, { status });
 }

@@ -16,12 +16,19 @@ export async function GET(req: NextRequest, { params }: RouteContext) {
     const authErr = enforceTenantAccess(context);
     if (authErr) return authErr;
 
+    const db = await getDb();
+
     // Apenas Super Admin ou membro da própria organização
     if (!context!.isSuperAdmin && context!.organizationId !== orgId) {
-      return apiError('Acesso não autorizado a esta organização', 403);
+      const isMember = await db.execute({
+        sql: 'SELECT 1 FROM organization_users WHERE organization_id = ? AND user_id = ? AND deleted_at IS NULL',
+        args: [orgId, context!.userId],
+      });
+      if (isMember.rows.length === 0) {
+        return apiError('Acesso não autorizado a esta organização', 403);
+      }
     }
 
-    const db = await getDb();
     const result = await db.execute({
       sql: 'SELECT * FROM organizations WHERE id = ? AND deleted_at IS NULL',
       args: [orgId],
@@ -45,14 +52,18 @@ export async function PUT(req: NextRequest, { params }: RouteContext) {
     const authErr = enforceTenantAccess(context, ['super_admin', 'org_admin']);
     if (authErr) return authErr;
 
+    const db = await getDb();
+
     if (!context!.isSuperAdmin && context!.organizationId !== orgId) {
-      return apiError('Acesso não autorizado a esta organização', 403);
+      const isMemberAdmin = await db.execute({
+        sql: `SELECT 1 FROM organization_users WHERE organization_id = ? AND user_id = ? AND role IN ('org_admin', 'super_admin') AND deleted_at IS NULL`,
+        args: [orgId, context!.userId],
+      });
+      if (isMemberAdmin.rows.length === 0) {
+        return apiError('Acesso não autorizado a esta organização', 403);
+      }
     }
 
-    const body = await req.json();
-    const { name, description, type, province, district, address, phone, email, logo, status } = body;
-
-    const db = await getDb();
     const current = await db.execute({
       sql: 'SELECT * FROM organizations WHERE id = ? AND deleted_at IS NULL',
       args: [orgId],
@@ -61,6 +72,9 @@ export async function PUT(req: NextRequest, { params }: RouteContext) {
     if (current.rows.length === 0) {
       return apiError('Organização não encontrada', 404);
     }
+
+    const body = await req.json();
+    const { name, description, type, province, district, address, phone, email, logo, status } = body;
 
     await db.execute({
       sql: `UPDATE organizations SET 

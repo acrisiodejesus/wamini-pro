@@ -13,16 +13,22 @@ export async function GET(req: NextRequest) {
 
     const db = await getDb();
 
-    let sql = 'SELECT * FROM organizations WHERE deleted_at IS NULL';
-    const args: any[] = [];
+    let sql: string;
+    let args: any[] = [];
 
-    // Se não for super_admin, apenas visualiza a sua própria organização
-    if (!context!.isSuperAdmin) {
-      sql += ' AND id = ?';
-      args.push(context!.organizationId);
+    // Se for super_admin, visualiza todas as organizações
+    if (context!.isSuperAdmin) {
+      sql = 'SELECT * FROM organizations WHERE deleted_at IS NULL ORDER BY name ASC';
+    } else {
+      // Retorna as organizações a que o utilizador pertence
+      sql = `SELECT DISTINCT o.* FROM organizations o
+             LEFT JOIN organization_users ou ON o.id = ou.organization_id AND ou.user_id = ? AND ou.deleted_at IS NULL
+             WHERE o.deleted_at IS NULL
+               AND (o.id = ? OR ou.organization_id = o.id)
+             ORDER BY o.name ASC`;
+      args = [context!.userId, context!.organizationId];
     }
 
-    sql += ' ORDER BY name ASC';
     const result = await db.execute({ sql, args });
 
     return apiOk(result.rows);
@@ -32,11 +38,11 @@ export async function GET(req: NextRequest) {
   }
 }
 
-// POST /api/v1/organizations - Criar organização (Apenas Super Admin ou Configuração Inicial)
+// POST /api/v1/organizations - Criar organização (Qualquer utilizador autenticado)
 export async function POST(req: NextRequest) {
   try {
     const context = await getTenantContext(req);
-    const authErr = enforceTenantAccess(context, ['super_admin']);
+    const authErr = enforceTenantAccess(context);
     if (authErr) return authErr;
 
     const body = await req.json();
@@ -60,6 +66,27 @@ export async function POST(req: NextRequest) {
 
     const orgId = Number(result.lastInsertRowid);
 
+    // Associar o criador como administrador da organização (org_admin)
+    await db.execute({
+      sql: `INSERT INTO organization_users (organization_id, user_id, role)
+            VALUES (?, ?, 'org_admin')
+            ON CONFLICT(organization_id, user_id) DO UPDATE SET role = 'org_admin'`,
+      args: [orgId, context!.userId],
+    });
+
+    // Definir esta organização como a organização ativa do utilizador
+    await db.execute({
+      sql: `UPDATE users SET organization_id = ? WHERE id = ?`,
+      args: [orgId, context!.userId],
+    });
+
+    // Criar núcleo/grupo inicial padrão para a organização
+    await db.execute({
+      sql: `INSERT INTO groups (organization_id, name, description, province, district, locality, status)
+            VALUES (?, ?, 'Núcleo principal da organização', ?, ?, 'Sede', 'active')`,
+      args: [orgId, `Núcleo Sede (${name})`, province, district],
+    });
+
     await recordAuditLog(db, req, {
       actor_id: context!.userId,
       action: 'CREATE',
@@ -68,7 +95,19 @@ export async function POST(req: NextRequest) {
       new_data: { name, type, province, district },
     });
 
-    return apiOk({ message: 'Organização criada com sucesso', organization_id: orgId }, 201);
+    const created = await db.execute({
+      sql: 'SELECT * FROM organizations WHERE id = ?',
+      args: [orgId],
+    });
+
+    return apiOk(
+      {
+        message: 'Organização criada com sucesso',
+        organization_id: orgId,
+        organization: created.rows[0],
+      },
+      201
+    );
   } catch (err: any) {
     console.error('Organizations POST error:', err);
     return apiError(`Erro ao criar organização: ${err.message}`, 500);
