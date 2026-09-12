@@ -79,7 +79,7 @@ export default function LanguageSwitcher() {
                   disabled={isPending}
                   role="option"
                   aria-selected={locale === lang.code}
-                  aria-label={`${lang.label}${locale === lang.code ? ' — selecionado atualmente' : ''}`}
+                  aria-label={`${lang.label}${locale === lang.code ? ', selecionado atualmente' : ''}`}
                   className={clsx(
                     "w-full flex items-center justify-between p-4 rounded-xl transition-colors",
                     locale === lang.code 

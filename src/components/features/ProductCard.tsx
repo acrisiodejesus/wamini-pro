@@ -74,7 +74,7 @@ export default function ProductCard({ product, apiProductId }: ProductCardProps)
   return (
     <div
       className="group block bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-100 overflow-hidden"
-      aria-label={`${product.name} — ${product.price} meticais por ${product.unit}`}
+      aria-label={`${product.name}, ${product.price} meticais por ${product.unit}`}
     >
       {/* Image */}
       <div className="relative h-48 w-full bg-gray-100 overflow-hidden">

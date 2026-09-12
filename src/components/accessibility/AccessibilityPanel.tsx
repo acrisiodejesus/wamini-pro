@@ -373,7 +373,7 @@ export default function AccessibilityPanel() {
           {/* Divider + screen reader note */}
           {isScreenReaderActive && (
             <p className="text-xs text-green-700 bg-green-50 rounded-lg px-3 py-2 border border-green-100">
-              ✓ Leitor activo — foque num elemento para ouvir.
+              ✓ Leitor activo: foque num elemento para ouvir.
             </p>
           )}
         </div>

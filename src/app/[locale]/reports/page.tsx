@@ -110,7 +110,7 @@ export default function ReportsPage() {
               <div>
                 <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700">Relatório Executivo</span>
                 <h2 className="text-xl font-black text-gray-900">{org.name}</h2>
-                <p className="text-xs text-gray-500">{org.province} • {org.district} — Emitido automaticamente</p>
+                <p className="text-xs text-gray-500">{org.province} • {org.district}, Emitido automaticamente</p>
               </div>
               <span className="px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 font-bold text-xs">
                 Certificado Auditável

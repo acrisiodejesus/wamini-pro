@@ -9,7 +9,7 @@
 }
 
 @theme inline {
-  /* Inter é carregada via next/font — usa a variável CSS injectada no <html> */
+  /* Inter e carregada via next/font (usa a variavel CSS injectada no <html>) */
   --font-family-sans: var(--font-inter, 'Inter', system-ui, sans-serif);
 
   /* Wamini Brand Colors */
@@ -65,7 +65,7 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(251, 176, 59, 0.1);
 }
 
-/* Inputs com ícone à esquerda — sobrescreve o padding global */
+/* Inputs com icone a esquerda: sobrescreve o padding global */
 .input-icon-left {
   padding-left: 2.75rem !important;
 }

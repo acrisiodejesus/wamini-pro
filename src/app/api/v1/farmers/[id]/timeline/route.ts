@@ -65,7 +65,7 @@ export async function GET(req: NextRequest, { params }: RouteContext) {
       events.push({
         type: 'crop_planting',
         title: `Plantio: ${row.crop_name} (${row.cycle_name})`,
-        description: `Área plantada: ${row.planted_area_ha}ha — Estimativa: ${row.estimated_production}kg`,
+        description: `Área plantada: ${row.planted_area_ha}ha, Estimativa: ${row.estimated_production}kg`,
         date: String(row.planting_date || row.created_at),
       });
 
@@ -91,7 +91,7 @@ export async function GET(req: NextRequest, { params }: RouteContext) {
       events.push({
         type: 'input_received',
         title: `Recebimento de Insumo: ${row.input_name}`,
-        description: `Quantidade: ${row.quantity} ${row.unit} — Finalidade: ${row.purpose || 'Campanha agrícola'}`,
+        description: `Quantidade: ${row.quantity} ${row.unit}, Finalidade: ${row.purpose || 'Campanha agrícola'}`,
         date: String(row.distribution_date || row.created_at),
       });
     }

@@ -19,6 +19,7 @@ export interface RegisterData {
   localization?: string;
   mobile_number: string;
   password: string;
+  role?: string;
   photo?: string;
 }
 

@@ -607,25 +607,25 @@ async function seedData(db: Client) {
   // ─── Marketplace Legado (preservado para compatibilidade e módulos futuros) ───
   const productSQL = `INSERT INTO products (name, quantity, price, photo, category, location, user_id) VALUES (?, ?, ?, ?, ?, ?, ?)`;
   const products: InStatement[] = [
-    { sql: productSQL, args: ['Tomate Vermelho — 50kg', 200, 70, '/products/tomate.png', 'PRODUTOS', 'Nampula', 1] },
-    { sql: productSQL, args: ['Milho Branco — 100kg', 500, 45, '/products/milho.png', 'PRODUTOS', 'Monapo', 1] },
-    { sql: productSQL, args: ['Feijão Manteiga — 25kg', 150, 120, '/products/feijao.png', 'PRODUTOS', 'Murrupula', 2] },
-    { sql: productSQL, args: ['Arroz Carolino — 50kg', 80, 85, '/products/arroz.png', 'PRODUTOS', 'Nampula', 1] },
-    { sql: productSQL, args: ['Mandioca Fresca — 30kg', 300, 25, '/products/mandioca.png', 'PRODUTOS', 'Meconta', 3] },
-    { sql: productSQL, args: ['Batata-doce — 20kg', 120, 35, '/products/batata_doce.png', 'PRODUTOS', 'Angoche', 2] },
-    { sql: productSQL, args: ['Amendoim — 10kg', 400, 95, '/products/amendoim.png', 'PRODUTOS', 'Ribaué', 1] },
-    { sql: productSQL, args: ['Caju — 15kg', 60, 150, '/products/caju.png', 'PRODUTOS', 'Memba', 3] },
-    { sql: productSQL, args: ['Gergelim — 5kg', 200, 180, '/products/gergelim.png', 'PRODUTOS', 'Malema', 2] },
-    { sql: productSQL, args: ['Soja — 40kg', 250, 65, '/products/soja.png', 'PRODUTOS', 'Rapale', 1] },
-    { sql: productSQL, args: ['Banana Madura — caixa', 90, 40, '/products/banana.png', 'PRODUTOS', 'Moma', 3] },
-    { sql: productSQL, args: ['Papaia — 20kg', 70, 30, '/products/papaia.png', 'PRODUTOS', 'Nacala-Porto', 2] },
+    { sql: productSQL, args: ['Tomate Vermelho (50kg)', 200, 70, '/products/tomate.png', 'PRODUTOS', 'Nampula', 1] },
+    { sql: productSQL, args: ['Milho Branco (100kg)', 500, 45, '/products/milho.png', 'PRODUTOS', 'Monapo', 1] },
+    { sql: productSQL, args: ['Feijão Manteiga (25kg)', 150, 120, '/products/feijao.png', 'PRODUTOS', 'Murrupula', 2] },
+    { sql: productSQL, args: ['Arroz Carolino (50kg)', 80, 85, '/products/arroz.png', 'PRODUTOS', 'Nampula', 1] },
+    { sql: productSQL, args: ['Mandioca Fresca (30kg)', 300, 25, '/products/mandioca.png', 'PRODUTOS', 'Meconta', 3] },
+    { sql: productSQL, args: ['Batata-doce (20kg)', 120, 35, '/products/batata_doce.png', 'PRODUTOS', 'Angoche', 2] },
+    { sql: productSQL, args: ['Amendoim (10kg)', 400, 95, '/products/amendoim.png', 'PRODUTOS', 'Ribaué', 1] },
+    { sql: productSQL, args: ['Caju (15kg)', 60, 150, '/products/caju.png', 'PRODUTOS', 'Memba', 3] },
+    { sql: productSQL, args: ['Gergelim (5kg)', 200, 180, '/products/gergelim.png', 'PRODUTOS', 'Malema', 2] },
+    { sql: productSQL, args: ['Soja (40kg)', 250, 65, '/products/soja.png', 'PRODUTOS', 'Rapale', 1] },
+    { sql: productSQL, args: ['Banana Madura (caixa)', 90, 40, '/products/banana.png', 'PRODUTOS', 'Moma', 3] },
+    { sql: productSQL, args: ['Papaia (20kg)', 70, 30, '/products/papaia.png', 'PRODUTOS', 'Nacala-Porto', 2] },
   ];
 
   // Insumos legado
   const inputSQL = `INSERT INTO inputs (name, quantity, price, photo, user_id) VALUES (?, ?, ?, ?, ?)`;
   const inputsLegacy: InStatement[] = [
-    { sql: inputSQL, args: ['Fertilizante NPK — 50kg', 100, 2500, '/products/fertilizante.png', 1] },
-    { sql: inputSQL, args: ['Sementes de Milho — 10kg', 50, 1200, '/products/sementes_milho.png', 1] },
+    { sql: inputSQL, args: ['Fertilizante NPK (50kg)', 100, 2500, '/products/fertilizante.png', 1] },
+    { sql: inputSQL, args: ['Sementes de Milho (10kg)', 50, 1200, '/products/sementes_milho.png', 1] },
   ];
 
   // Transportes legado

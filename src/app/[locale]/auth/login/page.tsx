@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl';
 import { Link, useRouter } from '@/i18n/routing';
 import { useAuth } from '@/hooks/useAuth';
 import { motion } from 'framer-motion';
-import { Phone, Lock, AlertCircle, Eye, EyeOff, Loader2, ArrowRight } from 'lucide-react';
+import { Phone, Lock, AlertCircle, Eye, EyeOff, Loader2, ArrowRight, ArrowLeft, Sprout, ShieldCheck, CheckCircle2 } from 'lucide-react';
 import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
 
 const loginSchema = z.object({
@@ -28,6 +28,7 @@ export default function LoginPage() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm<LoginFormInputs>({
     resolver: zodResolver(loginSchema),
@@ -43,75 +44,124 @@ export default function LoginPage() {
     }
   };
 
+  const handleQuickFill = (phone: string, pass: string) => {
+    setValue('mobile_number', phone, { shouldValidate: true });
+    setValue('password', pass, { shouldValidate: true });
+    setApiError(null);
+  };
+
   return (
     <div className="min-h-screen flex flex-col md:flex-row bg-gray-50">
-      {/* ── LEFT / BRAND PANEL ── */}
-      <div className="gradient-wamini flex flex-col items-center justify-center p-8 md:p-12 md:w-5/12 min-h-[300px] md:min-h-screen">
-        <motion.div
-          initial={{ opacity: 0, x: -32 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.6 }}
-          className="flex flex-col items-center text-center w-full max-w-sm"
-        >
-          <div className="flex items-center gap-2 mb-2">
-            <h1 className="text-6xl md:text-7xl font-black logo-wamini leading-none">Wamini</h1>
-            <span className="text-xs uppercase font-bold tracking-widest px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 self-start mt-2">
+      {/* ── PAINEL LATERAL ESQUERDO (Apresentação e Marca) ── */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-emerald-900 via-teal-950 to-gray-950 text-white flex flex-col justify-between p-8 md:p-14 md:w-5/12 min-h-[320px] md:min-h-screen">
+        {/* Efeitos de luz de fundo */}
+        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 -right-20 w-80 h-80 rounded-full bg-teal-500/10 blur-3xl pointer-events-none" />
+
+        <div className="relative z-10">
+          <Link href="/" className="inline-flex items-center gap-2 group">
+            <span className="text-3xl font-black logo-wamini text-white tracking-tight">Wamini</span>
+            <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded bg-emerald-400/20 text-emerald-300 border border-emerald-400/30">
               Pro
             </span>
+          </Link>
+          <p className="text-xs text-emerald-200/80 mt-1">Gestão Agrícola Comunitária</p>
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="relative z-10 my-auto py-8"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-emerald-300 mb-4">
+            <Sprout size={14} />
+            <span>Agricultura Familiar e Cooperativas</span>
           </div>
-          <p className="text-gray-800 font-semibold text-base md:text-lg text-center mx-auto mt-2">
-            {t('landing.tagline')}
+
+          <h1 className="text-3xl sm:text-4xl font-black tracking-tight leading-tight mb-4">
+            Apoio direto à terra e aos produtores
+          </h1>
+
+          <p className="text-sm text-gray-300 leading-relaxed max-w-md">
+            Aceda à sua conta para consultar machambas, acompanhar as colheitas da sua cooperativa e aceder ao mercado coletivo.
           </p>
 
-          <div className="flex flex-wrap gap-2 justify-center mt-8">
-            {(['farmer', 'transporter', 'buyer'] as const).map((role) => (
-              <span key={role} className="bg-black/10 text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full">
-                {t(`auth.roles.${role}`)}
-              </span>
-            ))}
-          </div>
-
-          <div className="mt-8 p-3 rounded-2xl bg-white/40 border border-black/5 text-xs text-gray-700 text-left w-full space-y-1">
-            <p className="font-bold text-gray-900">Credenciais Demo de Teste:</p>
-            <p>• Admin: <span className="font-mono font-semibold">841234567</span> / <span className="font-mono">123456</span></p>
-            <p>• Gestor: <span className="font-mono font-semibold">862345678</span> / <span className="font-mono">123456</span></p>
+          <div className="grid grid-cols-2 gap-2.5 mt-8 max-w-sm">
+            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-gray-200">
+              <CheckCircle2 size={15} className="text-emerald-400 shrink-0" />
+              <span>Sem papéis perdidos</span>
+            </div>
+            <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/5 border border-white/10 text-xs text-gray-200">
+              <CheckCircle2 size={15} className="text-emerald-400 shrink-0" />
+              <span>Funciona sem rede</span>
+            </div>
           </div>
         </motion.div>
+
+        {/* Caixa de teste rápido (Demo) */}
+        <div className="relative z-10 pt-4 border-t border-white/10">
+          <p className="text-[11px] font-bold uppercase tracking-wider text-emerald-300 mb-2">
+            Acesso Rápido para Demonstração:
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => handleQuickFill('841234567', '123456')}
+              className="text-xs px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-gray-200 transition-colors flex items-center gap-1.5 border border-white/10"
+            >
+              <span>Preencher Administrador</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => handleQuickFill('862345678', '123456')}
+              className="text-xs px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-gray-200 transition-colors flex items-center gap-1.5 border border-white/10"
+            >
+              <span>Preencher Gestor</span>
+            </button>
+          </div>
+        </div>
       </div>
 
-      {/* ── RIGHT / FORM PANEL ── */}
-      <div className="flex-1 flex items-center justify-center px-6 py-10 bg-white">
+      {/* ── PAINEL DIREITO (Formulário de Entrada) ── */}
+      <div className="flex-1 flex items-center justify-center px-6 py-12 bg-white">
         <motion.div
-          initial={{ opacity: 0, y: 28 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
+          transition={{ duration: 0.5 }}
           className="w-full max-w-md"
         >
-          {/* Top Bar with Language Switcher */}
+          {/* Barra superior de navegação */}
           <div className="flex justify-between items-center mb-8">
-            <Link href="/" className="text-xs font-semibold text-gray-400 hover:text-gray-600 transition-colors">
-              ← Início
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold text-gray-500 hover:text-emerald-800 transition-colors"
+            >
+              <ArrowLeft size={14} />
+              <span>Voltar ao início</span>
             </Link>
             <LanguageSwitcher />
           </div>
 
           <div className="mb-6">
-            <h2 className="text-3xl font-black text-gray-900 tracking-tight">{t('auth.login_title')}</h2>
-            <p className="text-gray-500 mt-1 text-sm">{t('auth.login_subtitle')}</p>
+            <h2 className="text-3xl font-black text-gray-900 tracking-tight">Entrar na Conta</h2>
+            <p className="text-gray-500 mt-1.5 text-sm">
+              Insira o seu número de telemóvel e senha para continuar.
+            </p>
           </div>
 
           {apiError && (
-            <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-start gap-3">
+            <div className="mb-6 p-4 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-start gap-3">
               <AlertCircle size={18} className="shrink-0 mt-0.5 text-red-500" />
-              <span>{apiError}</span>
+              <span className="font-medium">{apiError}</span>
             </div>
           )}
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Mobile number */}
+            {/* Campo: Número de Telemóvel */}
             <div>
               <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1.5">
-                {t('auth.phone_label')}
+                Número de Telemóvel
               </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-gray-400">
@@ -119,9 +169,9 @@ export default function LoginPage() {
                 </span>
                 <input
                   type="tel"
-                  placeholder={t('auth.phone_placeholder')}
+                  placeholder="84 123 4567"
                   {...register('mobile_number')}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm bg-gray-50/50 hover:bg-white transition-all font-medium text-gray-900 placeholder:text-gray-400"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent text-sm bg-gray-50/50 hover:bg-white transition-all font-medium text-gray-900 placeholder:text-gray-400"
                 />
               </div>
               {errors.mobile_number && (
@@ -129,11 +179,11 @@ export default function LoginPage() {
               )}
             </div>
 
-            {/* Password */}
+            {/* Campo: Senha */}
             <div>
               <div className="flex justify-between items-center mb-1.5">
                 <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider">
-                  {t('auth.password_label')}
+                  Palavra-passe
                 </label>
               </div>
               <div className="relative">
@@ -142,9 +192,9 @@ export default function LoginPage() {
                 </span>
                 <input
                   type={showPassword ? 'text' : 'password'}
-                  placeholder={t('auth.password_placeholder')}
+                  placeholder="Digite a sua senha"
                   {...register('password')}
-                  className="w-full pl-10 pr-11 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-sm bg-gray-50/50 hover:bg-white transition-all font-medium text-gray-900 placeholder:text-gray-400"
+                  className="w-full pl-10 pr-11 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:border-transparent text-sm bg-gray-50/50 hover:bg-white transition-all font-medium text-gray-900 placeholder:text-gray-400"
                 />
                 <button
                   type="button"
@@ -160,7 +210,7 @@ export default function LoginPage() {
               )}
             </div>
 
-            {/* Submit button */}
+            {/* Botão de Submissão */}
             <button
               type="submit"
               disabled={isSubmitting}
@@ -169,25 +219,26 @@ export default function LoginPage() {
               {isSubmitting ? (
                 <>
                   <Loader2 size={18} className="animate-spin" />
-                  <span>{t('auth.signing_in')}</span>
+                  <span>A verificar credenciais...</span>
                 </>
               ) : (
                 <>
-                  <span>{t('auth.login_title')}</span>
+                  <span>Entrar na Conta</span>
                   <ArrowRight size={16} />
                 </>
               )}
             </button>
           </form>
 
+          {/* Rodapé do formulário: criar conta */}
           <div className="mt-8 pt-6 border-t border-gray-100 text-center">
             <p className="text-sm text-gray-600">
-              {t('auth.no_account')}{' '}
+              Ainda não tem conta?{' '}
               <Link
                 href="/auth/register"
                 className="font-bold text-emerald-700 hover:text-emerald-800 transition-colors ml-1"
               >
-                {t('register')}
+                Registar nova conta
               </Link>
             </p>
           </div>
