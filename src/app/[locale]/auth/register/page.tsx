@@ -10,6 +10,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User, Phone, Lock, MapPin, AlertCircle, Sprout, Truck, ShoppingBag, Users } from 'lucide-react';
 import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
+import { DISTRICTS } from '@/constants/districts';
 
 const ROLE_ICONS = {
   farmer:      { Icon: Sprout,      color: '#2D6A4F', bg: '#f0faf4' },
@@ -17,32 +18,6 @@ const ROLE_ICONS = {
   seller:      { Icon: ShoppingBag, color: '#374151', bg: '#f3f4f6' },
   buyer:       { Icon: Users,       color: '#1d4ed8', bg: '#eff6ff' },
 };
-
-const DISTRICTS = [
-  'Angoche',
-  'Eráti',
-  'Ilha de Moçambique',
-  'Lalaua',
-  'Larde',
-  'Liúpo',
-  'Malema',
-  'Meconta',
-  'Mecubúri',
-  'Memba',
-  'Mogincual',
-  'Mogovolas',
-  'Moma',
-  'Monapo',
-  'Mossuril',
-  'Muecate',
-  'Murrupula',
-  'Nacala-Porto',
-  'Nacala-a-Velha',
-  'Nacarôa',
-  'Nampula',
-  'Rapale',
-  'Ribáuè',
-];
 
 const registerSchema = z.object({
   role:            z.string().min(1),

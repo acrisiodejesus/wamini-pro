@@ -22,5 +22,4 @@ export const DISTRICTS = [
   'Nampula',
   'Rapale',
   'Ribáuè',
-  'Malema',
 ];
