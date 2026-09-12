@@ -135,7 +135,7 @@ export default function RegisterPage() {
 
         <div className="relative z-10">
           <Link href="/" className="inline-flex items-center gap-2 group">
-            <span className="text-3xl font-black logo-wamini text-white !text-white tracking-tight" style={{ color: '#ffffff' }}>
+            <span className="text-3xl font-black logo-wamini logo-white text-white !text-white tracking-tight" style={{ color: '#ffffff' }}>
               Wamini
             </span>
             <span className="text-[10px] uppercase font-bold tracking-widest px-2 py-0.5 rounded bg-emerald-400/20 text-emerald-300 border border-emerald-400/30">

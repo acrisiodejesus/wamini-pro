@@ -39,17 +39,21 @@ body {
 /* Wamini Logo Font */
 .logo-wamini {
   font-family: 'Miskan', sans-serif;
-  color: inherit;
+  color: #111827; /* Escuro por padrão para fundos claros */
 }
 
-/* Forçar Wamini em branco puro quando sobre fundo verde ou escuro */
+/* Wamini branco para fundos verdes ou escuros */
+.logo-wamini.logo-white,
 .logo-wamini.text-white,
-.text-white .logo-wamini,
-[class*="bg-emerald"] .logo-wamini,
-[class*="bg-teal"] .logo-wamini,
-[class*="bg-green"] .logo-wamini,
-[class*="bg-gray-9"] .logo-wamini {
+.logo-white .logo-wamini {
   color: #ffffff !important;
+}
+
+/* Wamini escuro garantido para barras de navegação brancas */
+.logo-wamini.logo-dark,
+.logo-wamini.text-gray-900,
+.logo-dark .logo-wamini {
+  color: #111827 !important;
 }
 
 /* Rounded Input Styles */

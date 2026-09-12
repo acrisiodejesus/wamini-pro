@@ -80,7 +80,9 @@ export default function HomePage() {
       >
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-black logo-wamini text-gray-900 tracking-tight">Wamini</span>
+            <span className="text-2xl font-black logo-wamini logo-dark text-gray-900 tracking-tight" style={{ color: '#111827' }}>
+              Wamini
+            </span>
             <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">
               Pro
             </span>

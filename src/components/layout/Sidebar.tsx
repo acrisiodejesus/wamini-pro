@@ -54,7 +54,7 @@ export default function Sidebar() {
         {/* Brand Header */}
         <div className="p-5 border-b border-gray-100 flex items-center justify-between">
           <Link href="/dashboard" className="flex items-center gap-2">
-            <span className="text-2xl font-black logo-wamini text-gray-900">Wamini</span>
+            <span className="text-2xl font-black logo-wamini logo-dark text-gray-900" style={{ color: '#111827' }}>Wamini</span>
             <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">
               Pro
             </span>
