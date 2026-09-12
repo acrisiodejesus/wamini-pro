@@ -7,19 +7,26 @@ const intlMiddleware = createMiddleware({
   defaultLocale: 'pt'
 });
 
-export default function middleware(req: NextRequest) {
+const isAuth0Configured = Boolean(
+  process.env.AUTH0_SECRET &&
+  process.env.AUTH0_CLIENT_ID &&
+  process.env.AUTH0_ISSUER_BASE_URL
+);
+
+export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // Pattern for admin routes: /admin, /pt/admin, /en/admin, etc.
   const isAdminPath = pathname.match(/^\/(?:en|pt|emakua)\/admin/) || pathname.match(/^\/admin/);
 
-  if (isAdminPath && process.env.AUTH0_SECRET) {
+  if (isAdminPath && isAuth0Configured) {
     try {
       // Force Auth0 authentication for admin paths at the edge level
       // Note: Role check happens server-side in layout/API since edge can't reach SQLite
-      return (withMiddlewareAuthRequired(async function(req) {
+      const authMiddleware = withMiddlewareAuthRequired(async function(req) {
         return intlMiddleware(req);
-      }) as any)(req, {});
+      });
+      return await (authMiddleware as any)(req, {});
     } catch (err) {
       console.warn('[Middleware] Auth0 check error:', err);
     }
