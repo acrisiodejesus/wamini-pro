@@ -13,7 +13,7 @@ export default function AuthSync() {
         if (profile) {
           const { user, login } = useAuthStore.getState();
           if (!user || user.id !== profile.id?.toString()) {
-            login(profile as any, 'auth0-session');
+            login(profile as any, 'session');
           }
         } else {
           const { user, logout } = useAuthStore.getState();

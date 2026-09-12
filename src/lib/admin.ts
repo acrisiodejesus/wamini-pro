@@ -31,7 +31,7 @@ export async function ensureAdmin(req?: NextRequest): Promise<AdminSession | nul
 
   const user = result.rows[0] as any;
 
-  if (!user || user.role !== 'admin') {
+  if (!user || (user.role !== 'admin' && user.role !== 'super_admin')) {
     return null;
   }
 

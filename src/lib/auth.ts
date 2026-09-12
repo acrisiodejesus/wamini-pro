@@ -1,76 +1,75 @@
-import { auth0 } from '@/lib/auth0';
 import { NextRequest } from 'next/server';
 import { getDb } from '@/lib/db';
+import { verifyJwt } from '@/lib/jwt';
 
-// DIAGNÓSTICO: Validar variaveis de ambiente na inicialização (Produção)
-if (process.env.NODE_ENV === 'production') {
-  if (!process.env.AUTH0_ISSUER_BASE_URL) {
-    console.error('[CRITICAL] AUTH0_ISSUER_BASE_URL não está definida no ambiente!');
-  } else if (!process.env.AUTH0_ISSUER_BASE_URL.startsWith('https://')) {
-    console.error('[CRITICAL] AUTH0_ISSUER_BASE_URL deve começar com https://. Valor actual:', process.env.AUTH0_ISSUER_BASE_URL);
-  }
+export interface AuthUserPayload {
+  userId: number;
+  name: string;
+  role: string;
+  mobile_number?: string;
+  sub?: string;
+  [key: string]: any;
 }
 
 /**
- * Função utilitária para verificar se existe uma sessão Auth0 válida 
- * em chamadas Edge/API de forma segura.
- * Se nula, o chamador deve disparar 401.
- * 
- * Agora retorna também o 'userId' interno da base SQLite.
+ * Função utilitária para autenticar requisições via Token JWT (Bearer Token ou Cookie).
+ * Retorna o payload do utilizador com dados atualizados da base de dados local, ou null se não autenticado.
  */
-export async function getAuthPayload(req?: NextRequest) {
-  // Test Backdoor ONLY for Playwright Pentests
-  if (req && process.env.NODE_ENV !== 'production') {
-    const authHeader = req.headers.get('Authorization');
-    if (authHeader === 'Bearer TEST_TOKEN_USER_1') {
-      return { sub: 'auth0|mock_user_1', userId: 1, name: 'Test User' };
+export async function getAuthPayload(req?: NextRequest): Promise<AuthUserPayload | null> {
+  if (!req) return null;
+
+  const authHeader = req.headers.get('Authorization') || req.headers.get('authorization');
+
+  // Test Backdoor ONLY for Playwright Pentests / Testes E2E
+  if (process.env.NODE_ENV !== 'production' && authHeader === 'Bearer TEST_TOKEN_USER_1') {
+    return { sub: 'mock_user_1', userId: 1, name: 'Test User', role: 'super_admin' };
+  }
+
+  let token: string | null = null;
+
+  if (authHeader && authHeader.startsWith('Bearer ')) {
+    token = authHeader.substring(7).trim();
+  } else {
+    // Tenta obter de cookies se disponível
+    const cookieToken = req.cookies.get('wamini_token')?.value;
+    if (cookieToken) {
+      token = cookieToken;
     }
   }
 
-  let session;
-  try {
-    session = await auth0.getSession();
-  } catch (err) {
-    console.error('[Auth] Error getting session:', err);
+  if (!token) {
     return null;
   }
-  if (!session || !session.user) return null;
 
-  const sub = session.user.sub;
-  const db = await getDb();
-
-  // Procurar utilizador interno pelo Auth0 sub
-  const result = await db.execute({
-    sql: 'SELECT id, name, role FROM users WHERE auth0_sub = ? AND deleted_at IS NULL',
-    args: [sub],
-  });
-  let user = result.rows[0] as any;
-
-  // AUTO-LINKER: Se não existe na DB local, cria-o agora (Primeiro acesso)
-  if (!user) {
-    try {
-      const name = session.user.name || session.user.nickname || 'Novo Utilizador';
-      
-      // Criar com mobile_number placeholder pois o Auth0 não o fornece por defeito
-      const info = await db.execute({
-        sql: `INSERT INTO users (name, auth0_sub, mobile_number, role) VALUES (?, ?, ?, 'buyer')`,
-        args: [name, sub, `auth0_${sub.split('|')[1] || Date.now()}`],
-      });
-      
-      user = { id: Number(info.lastInsertRowid), name, role: 'buyer' };
-      console.log(`[AuthLinker] Novo utilizador local criado: ${name} (ID: ${user.id})`);
-    } catch (err) {
-      console.error('[AuthLinker] Erro ao criar utilizador local:', err);
-      // Se falhar a criação (ex: constraint de mobile_number), devolvemos o payload básico mas avisamos
-    }
+  const jwtPayload = await verifyJwt(token);
+  if (!jwtPayload || !jwtPayload.userId) {
+    return null;
   }
-  
-  return {
-    ...session.user,
-    userId: user?.id ? Number(user.id) : undefined,
-    internalRole: user?.role,
-    name: user?.name || session.user.name
-  };
+
+  try {
+    const db = await getDb();
+    const result = await db.execute({
+      sql: 'SELECT id, name, mobile_number, role, localization FROM users WHERE id = ? AND deleted_at IS NULL',
+      args: [jwtPayload.userId],
+    });
+
+    const user = result.rows[0] as any;
+    if (!user) {
+      return null;
+    }
+
+    return {
+      userId: Number(user.id),
+      name: user.name,
+      role: user.role || 'buyer',
+      mobile_number: user.mobile_number,
+      localization: user.localization,
+      sub: String(user.id),
+    };
+  } catch (error) {
+    console.error('[Auth] Erro ao validar utilizador na base de dados:', error);
+    return null;
+  }
 }
 
 /** Resposta de erro JSON padrão */

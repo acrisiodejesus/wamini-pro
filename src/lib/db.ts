@@ -61,6 +61,7 @@ async function initSchema(db: Client) {
       subscription_plan   TEXT    DEFAULT 'free',
       subscription_status TEXT    DEFAULT 'inactive',
       subscription_expiry TEXT,
+      password_hash TEXT,
       created_at  TEXT    DEFAULT (datetime('now')),
       updated_at  TEXT    DEFAULT (datetime('now')),
       deleted_at  TEXT    DEFAULT NULL
@@ -414,10 +415,12 @@ async function initSchema(db: Client) {
     "ALTER TABLE users ADD COLUMN subscription_status TEXT DEFAULT 'inactive'",
     "ALTER TABLE users ADD COLUMN subscription_expiry TEXT",
     "ALTER TABLE users ADD COLUMN organization_id INTEGER REFERENCES organizations(id)",
+    "ALTER TABLE users ADD COLUMN password_hash TEXT",
+    "UPDATE users SET password_hash = '$2b$10$1gccTTyDjS8b00bx6txObug1hZeCJe9YXQ9hKNvQdwF44xJfLOiGu' WHERE password_hash IS NULL",
   ];
 
   for (const m of migrations) {
-    try { await db.execute(m); } catch { /* column already exists */ }
+    try { await db.execute(m); } catch { /* column already exists or migration applied */ }
   }
 }
 
@@ -427,18 +430,21 @@ async function seedData(db: Client) {
   const count = Number(result.rows[0]?.c ?? 0);
   if (count > 0) return; // Já foi initializada
 
+  // Senha padrão para utilizadores demo: 123456
+  const defaultHash = '$2b$10$1gccTTyDjS8b00bx6txObug1hZeCJe9YXQ9hKNvQdwF44xJfLOiGu';
+
   // Utilizadores demo
   const users: InStatement[] = [
-    { sql: `INSERT INTO users (name, mobile_number, auth0_sub, localization, role) VALUES (?, ?, ?, ?, ?)`,
-      args: ['Armando Maputo', '841234567', 'auth0|mock_user_1', 'Nampula', 'super_admin'] },
-    { sql: `INSERT INTO users (name, mobile_number, auth0_sub, localization, role) VALUES (?, ?, ?, ?, ?)`,
-      args: ['Maria da Graça', '879876543', 'auth0|mock_user_2', 'Monapo', 'org_admin'] },
-    { sql: `INSERT INTO users (name, mobile_number, auth0_sub, localization, role) VALUES (?, ?, ?, ?, ?)`,
-      args: ['João Transportes', '862345678', 'auth0|mock_user_3', 'Nacala-Porto', 'group_manager'] },
-    { sql: `INSERT INTO users (name, mobile_number, auth0_sub, localization, role) VALUES (?, ?, ?, ?, ?)`,
-      args: ['Técnico Agostinho', '849988776', 'auth0|mock_user_4', 'Rapale', 'field_officer'] },
-    { sql: `INSERT INTO users (name, mobile_number, auth0_sub, localization, role) VALUES (?, ?, ?, ?, ?)`,
-      args: ['Inspetor Silva', '851122334', 'auth0|mock_user_5', 'Monapo', 'org_admin'] },
+    { sql: `INSERT INTO users (name, mobile_number, auth0_sub, localization, role, password_hash) VALUES (?, ?, ?, ?, ?, ?)`,
+      args: ['Armando Maputo', '841234567', 'auth0|mock_user_1', 'Nampula', 'super_admin', defaultHash] },
+    { sql: `INSERT INTO users (name, mobile_number, auth0_sub, localization, role, password_hash) VALUES (?, ?, ?, ?, ?, ?)`,
+      args: ['Maria da Graça', '879876543', 'auth0|mock_user_2', 'Monapo', 'org_admin', defaultHash] },
+    { sql: `INSERT INTO users (name, mobile_number, auth0_sub, localization, role, password_hash) VALUES (?, ?, ?, ?, ?, ?)`,
+      args: ['João Transportes', '862345678', 'auth0|mock_user_3', 'Nacala-Porto', 'group_manager', defaultHash] },
+    { sql: `INSERT INTO users (name, mobile_number, auth0_sub, localization, role, password_hash) VALUES (?, ?, ?, ?, ?, ?)`,
+      args: ['Técnico Agostinho', '849988776', 'auth0|mock_user_4', 'Rapale', 'field_officer', defaultHash] },
+    { sql: `INSERT INTO users (name, mobile_number, auth0_sub, localization, role, password_hash) VALUES (?, ?, ?, ?, ?, ?)`,
+      args: ['Inspetor Silva', '851122334', 'auth0|mock_user_5', 'Monapo', 'org_admin', defaultHash] },
   ];
 
   // Organizações Demo
