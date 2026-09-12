@@ -39,7 +39,17 @@ body {
 /* Wamini Logo Font */
 .logo-wamini {
   font-family: 'Miskan', sans-serif;
-  color: #374151;
+  color: inherit;
+}
+
+/* Forçar Wamini em branco puro quando sobre fundo verde ou escuro */
+.logo-wamini.text-white,
+.text-white .logo-wamini,
+[class*="bg-emerald"] .logo-wamini,
+[class*="bg-teal"] .logo-wamini,
+[class*="bg-green"] .logo-wamini,
+[class*="bg-gray-9"] .logo-wamini {
+  color: #ffffff !important;
 }
 
 /* Rounded Input Styles */

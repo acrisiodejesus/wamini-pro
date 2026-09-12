@@ -80,7 +80,7 @@ export default function HomePage() {
       >
         <div className="flex items-center gap-3">
           <Link href="/" className="flex items-center gap-2">
-            <span className="text-2xl font-black logo-wamini tracking-tight">Wamini</span>
+            <span className="text-2xl font-black logo-wamini text-gray-900 tracking-tight">Wamini</span>
             <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800">
               Pro
             </span>
@@ -366,7 +366,7 @@ export default function HomePage() {
       <footer className="bg-gray-950 text-gray-400 border-t border-gray-900 px-6 py-10 text-xs">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
-            <span className="font-black text-lg text-white logo-wamini">Wamini</span>
+            <span className="font-black text-lg text-white !text-white logo-wamini" style={{ color: '#ffffff' }}>Wamini</span>
             <span className="text-[10px] uppercase font-bold text-emerald-400 bg-emerald-950/60 px-2 py-0.5 rounded border border-emerald-900">
               Pro
             </span>
