@@ -1,0 +1,120 @@
+{
+  "common": {
+    "welcome": "Welcome to Wamini",
+    "dashboard": "Management Dashboard",
+    "organization": "Organization",
+    "groups": "Producer Groups",
+    "farmers": "Farmers",
+    "farms": "Farms & Plots",
+    "production": "Agricultural Production",
+    "crops": "Crops",
+    "reports": "Reports",
+    "market": "Market",
+    "prices": "Prices",
+    "negotiation": "Negotiation",
+    "profile": "Profile",
+    "search": "Search",
+    "login": "Sign In",
+    "register": "Register",
+    "logout": "Sign Out",
+    "nav": {
+      "dashboard": "DASHBOARD",
+      "organization": "ORGANIZATION",
+      "groups": "GROUPS",
+      "farmers": "FARMERS",
+      "farms": "FARMS",
+      "production": "PRODUCTION",
+      "crops": "CROPS",
+      "inputs": "INPUTS",
+      "reports": "REPORTS",
+      "market": "MARKET",
+      "prices": "PRICES",
+      "negotiation": "NEGOTIATION",
+      "profile": "MY PROFILE"
+    },
+    "categories": {
+      "all": "All",
+      "products": "Products",
+      "transport": "Transport",
+      "inputs": "Inputs"
+    },
+    "advertise": "POST AD",
+    "no_products_found": "No products found",
+    "advertise_modal": {
+      "title": "POST AN AD",
+      "name": "Name",
+      "quantity": "Quantity",
+      "price": "Price",
+      "location_placeholder": "Nametil",
+      "details": "Details",
+      "submit": "SUBMIT",
+      "success": "Ad posted successfully!",
+      "market_price_hint": "Current market price is 50 MZN/kg"
+    },
+    "auth": {
+      "login_title": "Sign In",
+      "login_subtitle": "Welcome back! Enter your details.",
+      "register_title": "Create Account",
+      "register_subtitle": "It's quick and free.",
+      "phone_label": "Mobile number",
+      "phone_placeholder": "84 000 0000",
+      "password_label": "Password",
+      "password_placeholder": "••••••",
+      "name_label": "Full name",
+      "name_placeholder": "Your name",
+      "district_label": "District",
+      "district_placeholder": "Select your district",
+      "confirm_password_label": "Confirm password",
+      "confirm_password_placeholder": "Repeat password",
+      "terms_label": "I agree to the terms and conditions",
+      "no_account": "Don't have an account?",
+      "have_account": "Already have an account?",
+      "forgot_password": "Forgot your password?",
+      "creating": "Creating account...",
+      "signing_in": "Signing in...",
+      "role_prompt": "I am a...",
+      "roles": {
+        "farmer": "Farmer",
+        "transporter": "Transporter",
+        "seller": "Input Seller",
+        "buyer": "Buyer"
+      }
+    },
+    "landing": {
+      "tagline": "Nampula's digital market — fair prices, easy access.",
+      "cta_start": "Get started",
+      "how_it_works": "How it works",
+      "how_subtitle": "For every market actor",
+      "how_description": "Wamini connects all sides of the market in one simple platform.",
+      "trust_title": "Fair prices for those who produce.",
+      "trust_subtitle": "Small farmers in Nampula selling directly, without middlemen.",
+      "cta_register": "Register for free",
+      "profiles": {
+        "farmer_title": "Farmers",
+        "farmer_desc": "Sell your produce directly to the market at fair prices.",
+        "transporter_title": "Transporters",
+        "transporter_desc": "Find freight and maximise your vehicle use.",
+        "seller_title": "Input Sellers",
+        "seller_desc": "Reach more farmers and increase your sales.",
+        "buyer_title": "Buyers",
+        "buyer_desc": "Buy directly from the producer, fresh and at a good price."
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "language": "Language",
+      "accessibility": "Accessibility",
+      "notifications": "Notifications",
+      "account": "Account"
+    },
+    "errors": {
+      "login_failed": "Sign in failed. Please try again.",
+      "phone_taken": "This phone number is already registered. Try signing in.",
+      "generic": "An error occurred. Please try again."
+    },
+    "cookies": {
+      "message": "We use cookies to ensure the best market experience.",
+      "accept": "Accept"
+    }
+  }
+}

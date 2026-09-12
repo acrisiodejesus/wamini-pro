@@ -1,0 +1,120 @@
+{
+  "common": {
+    "welcome": "Mwaakheleliwa Wamini",
+    "dashboard": "Ohoolela",
+    "organization": "Nikhuuru Nulupale",
+    "groups": "Nikhuuru na Alimi",
+    "farmers": "Alimi",
+    "farms": "Emathatta",
+    "production": "Wiima w'Echiyo",
+    "crops": "Simiinto",
+    "reports": "Oromola",
+    "market": "Soko",
+    "prices": "Nthambi",
+    "negotiation": "Owiwa",
+    "profile": "Okhala kwangu",
+    "search": "Waavya",
+    "login": "Ovolowa",
+    "register": "Wiireliha",
+    "logout": "Okhuma",
+    "nav": {
+      "dashboard": "OHOOLELA",
+      "organization": "NIKHUURU",
+      "groups": "NIKHUURU NA ALIMI",
+      "farmers": "ALIMI",
+      "farms": "EMATHATTA",
+      "production": "WIIMA",
+      "crops": "SIMIINTO",
+      "inputs": "ECHU EVI ILIMO",
+      "reports": "OROMOLA",
+      "market": "SOKO",
+      "prices": "NTHAMBI",
+      "negotiation": "OWIWA",
+      "profile": "OKHALA KWANGU"
+    },
+    "categories": {
+      "all": "Yoothe",
+      "products": "Echu",
+      "transport": "Osapha",
+      "inputs": "Echu evi ilimo"
+    },
+    "advertise": "WIIRELIHA",
+    "no_products_found": "Khivo echu ephwanyiwale",
+    "advertise_modal": {
+      "title": "WIIRELIHA",
+      "name": "Iina",
+      "quantity": "Okhula",
+      "price": "Nthambi",
+      "location_placeholder": "Nametil",
+      "details": "Ovolela",
+      "submit": "TUMA",
+      "success": "Wiireliha owumalela!",
+      "market_price_hint": "Nthambi ya soko ni 50mts/kg"
+    },
+    "auth": {
+      "login_title": "Ovolowa",
+      "login_subtitle": "Mwaakheleliwa! Volowesa echu evyo.",
+      "register_title": "Wiireliha",
+      "register_subtitle": "Ni wiri na onthu.",
+      "phone_label": "Nambari ya simu",
+      "phone_placeholder": "84 000 0000",
+      "password_label": "Maneno ya siri",
+      "password_placeholder": "••••••",
+      "name_label": "Iina laako yoothe",
+      "name_placeholder": "Iina laako",
+      "district_label": "Wilaya",
+      "district_placeholder": "Salavya wilaya yako",
+      "confirm_password_label": "Thibitisha maneno ya siri",
+      "confirm_password_placeholder": "Rudia maneno ya siri",
+      "terms_label": "Nakhubali na masharti",
+      "no_account": "Huna akaunti?",
+      "have_account": "Una akaunti tayari?",
+      "forgot_password": "Umesahau maneno ya siri?",
+      "creating": "Kuunda akaunti...",
+      "signing_in": "Kuingia...",
+      "role_prompt": "Mimi ni...",
+      "roles": {
+        "farmer": "Mkulima",
+        "transporter": "Msafirishaji",
+        "seller": "Mwuzaji wa pembejeo",
+        "buyer": "Mnunuzi"
+      }
+    },
+    "landing": {
+      "tagline": "Soko ya kidijitali ya Nampula — nthambi nzuri, ufikiaji rahisi.",
+      "cta_start": "Anza sasa",
+      "how_it_works": "Jinsi inavyofanya kazi",
+      "how_subtitle": "Kwa kila mshiriki wa soko",
+      "how_description": "Wamini inaunganisha pande zote za soko katika jukwaa moja rahisi.",
+      "trust_title": "Nthambi nzuri kwa wanaozalisha.",
+      "trust_subtitle": "Wakulima wadogo wa Nampula wanauza moja kwa moja, bila wasuluhishi.",
+      "cta_register": "Jiandikishe bure",
+      "profiles": {
+        "farmer_title": "Wakulima",
+        "farmer_desc": "Uza mazao yako moja kwa moja sokoni para bei nzuri.",
+        "transporter_title": "Wasafirishaji",
+        "transporter_desc": "Pata mizigo na uongeze matumizi ya magari yako.",
+        "seller_title": "Wauza Pembejeo",
+        "seller_desc": "Fikia wakulima zaidi na uongeze mauzo yako.",
+        "buyer_title": "Wanunuzi",
+        "buyer_desc": "Nunua moja kwa moja kwa mzalishaji, safi na kwa bei nzuri."
+      }
+    },
+    "settings": {
+      "title": "Mipangilio",
+      "language": "Lugha",
+      "accessibility": "Upatikanaji",
+      "notifications": "Arifa",
+      "account": "Akaunti"
+    },
+    "errors": {
+      "login_failed": "Kuingia kumeshindwa. Jaribu tena.",
+      "phone_taken": "Nambari hii ya simu imesajiliwa tayari. Jaribu kuingia.",
+      "generic": "Hitilafu imetokea. Jaribu tena."
+    },
+    "cookies": {
+      "message": "Ninnaapharihela cookies okhala soko yooreera.",
+      "accept": "Accepted"
+    }
+  }
+}

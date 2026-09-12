@@ -1,0 +1,193 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Miskan';
+  src: url('/Miskan.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme inline {
+  /* Inter é carregada via next/font — usa a variável CSS injectada no <html> */
+  --font-family-sans: var(--font-inter, 'Inter', system-ui, sans-serif);
+
+  /* Wamini Brand Colors */
+  --color-wamini-yellow: #D8FF12;
+  --color-wamini-orange: #FBB03B;
+  --color-wamini-green: #2D6A4F;
+  --color-background: #FFFFFF;
+  --color-foreground: #000000;
+  --color-gray-50: #F9FAFB;
+  --color-gray-100: #F3F4F6;
+  --color-gray-200: #E5E7EB;
+  --color-gray-500: #6B7280;
+  --color-gray-700: #374151;
+}
+
+body {
+  font-family: var(--font-family-sans);
+  background: var(--color-background);
+  color: var(--color-foreground);
+}
+
+/* Wamini Gradient Utility */
+.gradient-wamini {
+  background: linear-gradient(135deg, #D8FF12 0%, #FBB03B 100%);
+}
+
+/* Wamini Logo Font */
+.logo-wamini {
+  font-family: 'Miskan', sans-serif;
+  color: #374151;
+}
+
+/* Rounded Input Styles */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="number"],
+select,
+textarea {
+  border: 2px solid #000000;
+  border-radius: 1.5rem;
+  padding: 0.75rem 1.25rem;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #FBB03B;
+  box-shadow: 0 0 0 3px rgba(251, 176, 59, 0.1);
+}
+
+/* Inputs com ícone à esquerda — sobrescreve o padding global */
+.input-icon-left {
+  padding-left: 2.75rem !important;
+}
+
+/* Gradient Button */
+.btn-gradient {
+  background: linear-gradient(135deg, #D8FF12 0%, #FBB03B 100%);
+  color: #000000;
+  font-weight: 700;
+  border: none;
+  border-radius: 1.5rem;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+
+.btn-gradient:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(251, 176, 59, 0.45);
+}
+
+.btn-gradient:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(251, 176, 59, 0.2);
+}
+
+.btn-gradient:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Outline Button */
+.btn-outline {
+  background: transparent;
+  color: #000000;
+  font-weight: 700;
+  border: 2px solid #000000;
+  border-radius: 1.5rem;
+  padding: 0.75rem 2rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-outline:hover {
+  background: #000000;
+  color: #D8FF12;
+  transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-32px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes pulse-wamini {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(251,176,59,0.4); }
+  50%       { box-shadow: 0 0 0 10px rgba(251,176,59,0); }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.6s ease forwards;
+}
+
+.animate-pulse-wamini {
+  animation: pulse-wamini 2s infinite;
+}
+
+/* High Contrast Mode */
+.high-contrast {
+  --color-background: #000000;
+  --color-foreground: #FFFFFF;
+}
+
+.high-contrast input,
+.high-contrast select,
+.high-contrast textarea {
+  background: #000000;
+  color: #FFFFFF;
+  border-color: #FFFFFF;
+}
+
+.high-contrast img {
+  filter: grayscale(100%) contrast(120%);
+}
+
+.high-contrast button {
+  border: 2px solid white;
+}
+
+.high-contrast .bg-white,
+.high-contrast .bg-gray-50,
+.high-contrast .bg-gray-100,
+.high-contrast .bg-gray-200 {
+  background-color: #000000 !important;
+  color: #FFFFFF !important;
+}
+
+.high-contrast .text-black,
+.high-contrast .text-gray-600,
+.high-contrast .text-gray-700,
+.high-contrast .text-gray-900 {
+  color: #FFFFFF !important;
+}
+
+.high-contrast .gradient-wamini {
+  background: #000000 !important;
+  border: 1px solid #FFFFFF !important;
+  color: #FFFFFF !important;
+}
+
+.high-contrast svg {
+  stroke: #FFFFFF !important;
+}

@@ -1,0 +1,11 @@
+# Wamini — Nixpacks configuration for Coolify (Hetzner CX33)
+# better-sqlite3 requires native compilation — this ensures it works
+
+[phases.setup]
+nixPkgs = ["nodejs_20", "python3", "gcc", "gnumake"]
+
+[phases.build]
+cmds = ["npm install", "npm run build"]
+
+[start]
+cmd = "node .next/standalone/server.js"
