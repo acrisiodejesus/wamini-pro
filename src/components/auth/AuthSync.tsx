@@ -15,15 +15,15 @@ export default function AuthSync() {
           if (!user || user.id !== profile.id?.toString()) {
             login(profile as any, 'auth0-session');
           }
-        }
-      } catch (err: any) {
-        if (err?.response?.status === 401) {
+        } else {
           const { user, logout } = useAuthStore.getState();
           if (user) {
             logout();
             clearToken();
           }
         }
+      } catch {
+        // Ignora falhas de rede silenciosamente
       }
     }
 

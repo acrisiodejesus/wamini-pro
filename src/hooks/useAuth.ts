@@ -48,8 +48,10 @@ export function useAuth(): UseAuthReturn {
       const fullUser = await authService.getCurrentUser();
       
       // Update local and global states
-      setUser(fullUser);
-      storeLogin(fullUser as any, authResponse.access_token);
+      if (fullUser) {
+        setUser(fullUser);
+        storeLogin(fullUser as any, authResponse.access_token);
+      }
       
     } catch (err: any) {
       const errorMessage = err.response?.data?.message || err.message || 'Login failed';
@@ -92,8 +94,12 @@ export function useAuth(): UseAuthReturn {
     setIsLoading(true);
     try {
       const currentUser = await authService.getCurrentUser();
-      setUser(currentUser);
-      storeUpdateUser(currentUser as any); // Sync global store
+      if (currentUser) {
+        setUser(currentUser);
+        storeUpdateUser(currentUser as any); // Sync global store
+      } else {
+        logout();
+      }
     } catch (err: any) {
       console.error('Failed to refresh user:', err);
       // If refresh fails, logout

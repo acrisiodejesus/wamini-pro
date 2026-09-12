@@ -45,12 +45,16 @@ export const authService = {
   /**
    * Get current user profile
    */
-  async getCurrentUser(): Promise<UserProfile> {
+  async getCurrentUser(): Promise<UserProfile | null> {
     try {
       const response = await apiClient.get<UserProfile>('/users/profile');
       setStoredUser(response.data);
       return response.data;
     } catch (error: any) {
+      // 401 significa que o utilizador não tem sessão activa (esperado para utilizadores anónimos)
+      if (error?.response?.status === 401) {
+        return null;
+      }
       console.error('Error fetching current user:', error);
       throw error;
     }
