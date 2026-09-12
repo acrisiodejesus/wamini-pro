@@ -1,4 +1,4 @@
-// ─── Turso/libSQL Database — Vercel-compatible ────────────────────────────────
+// Turso / libSQL Database (Vercel e Local)
 // Em produção usa Turso via HTTP (variáveis TURSO_DATABASE_URL + TURSO_AUTH_TOKEN).
 // Em dev local usa um ficheiro SQLite local via file: protocol.
 
@@ -11,18 +11,18 @@ let _initialized = false;
 function getClient(): Client {
   if (_client) return _client;
 
-  const isProduction = process.env.NODE_ENV === 'production';
+  const tursoUrl = process.env.TURSO_DATABASE_URL;
 
-  if (isProduction) {
-    // Turso cloud (ou libSQL server auto-hospedado)
+  if (tursoUrl) {
+    // Turso cloud (ou libSQL server)
     _client = createClient({
-      url: process.env.TURSO_DATABASE_URL!,
+      url: tursoUrl,
       authToken: process.env.TURSO_AUTH_TOKEN,
     });
   } else {
-    // Dev local — ficheiro SQLite
+    // Ficheiro local SQLite
     _client = createClient({
-      url: 'file:local.db',
+      url: process.env.DATABASE_URL || 'file:local.db',
     });
   }
 
