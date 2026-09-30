@@ -156,7 +156,7 @@ export default function HomePage() {
           transition={{ duration: 0.6 }}
           className="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight max-w-4xl leading-[1.15] mb-6"
         >
-          Organize a sua cooperativa e apoie cada produtor,{' '}
+          WAMINI,{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-200 to-amber-200">
             da semente à colheita
           </span>
